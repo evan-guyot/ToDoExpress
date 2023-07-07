@@ -7,6 +7,7 @@ import {
   userFromUid,
 } from "@/functions/firebase_functions";
 import { ITodoItem, IUser } from "@/interfaces/firebase_interfaces";
+import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
 
 export default function Connexion() {
@@ -81,12 +82,13 @@ export default function Connexion() {
               <div className="flex flex-col">
                 <p>
                   Please{" "}
-                  <a
+                  <Link
                     className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                    href=""
                     onClick={() => setOpenModal(true)}
                   >
                     Log in
-                  </a>{" "}
+                  </Link>{" "}
                   to your account to manage your To-Do Express.{" "}
                 </p>
               </div>
