@@ -1,4 +1,3 @@
-"use client";
 import ConnexionModal from "@/components/connexionModal";
 import RootLayout from "@/components/layout";
 import {

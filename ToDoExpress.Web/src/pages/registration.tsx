@@ -1,4 +1,3 @@
-"use client";
 import RootLayout from "@/components/layout";
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
