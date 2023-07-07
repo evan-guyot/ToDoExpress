@@ -1,26 +1,8 @@
 "use client";
 import RootLayout from "@/components/layout";
-import { firebaseConnexion } from "@/functions/firebase_functions";
 import { useState } from "react";
-import {
-  GoogleAuthProvider,
-  getAuth,
-  signInWithPopup,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  sendPasswordResetEmail,
-  signOut,
-} from "firebase/auth";
-import {
-  getFirestore,
-  query,
-  getDocs,
-  collection,
-  where,
-  addDoc,
-  doc,
-  setDoc,
-} from "firebase/firestore";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "@/config/firebase";
 
 export default function Connexion() {
@@ -33,21 +15,6 @@ export default function Connexion() {
     email: string,
     password: string
   ) => {
-    // try {
-    //   const res = await createUserWithEmailAndPassword(auth, email, password);
-    //   const user = res.user;
-    //   await addDoc(collection(db, "users"), {
-    //     uid: user.uid,
-    //     name,
-    //     authProvider: "local",
-    //     email,
-    //   });
-    //   await addDoc(collection(db, "todos"), {
-    //     items: [],
-    //   });
-    // } catch (err) {
-    //   console.error(err);
-    // }
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
       const user = res.user;
@@ -70,7 +37,7 @@ export default function Connexion() {
   };
 
   return (
-    <RootLayout navbar={false}>
+    <RootLayout navbar>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
@@ -105,7 +72,7 @@ export default function Connexion() {
               htmlFor="mail"
               className="block text-sm font-medium leading-6 text-gray-900"
             >
-              E-Mail address
+              E-mail
             </label>
             <div className="mt-2">
               <input
@@ -152,7 +119,7 @@ export default function Connexion() {
               }
               className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-4"
             >
-              Log in
+              Register
             </button>
           </div>
         </div>

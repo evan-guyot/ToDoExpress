@@ -10,3 +10,9 @@ export interface IUser {
   name: string;
   email: string;
 }
+
+export interface ITodoItem {
+  title: string;
+  order: number;
+  description: string;
+}

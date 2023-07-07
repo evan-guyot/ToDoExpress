@@ -9,12 +9,13 @@ import { auth } from "@/config/firebase";
 
 export default function ConnexionModal(props: {
   setUid: Dispatch<SetStateAction<string | undefined>>;
+  open: boolean;
+  setOpenModal: (state: boolean) => void;
 }) {
-  const [open, setOpen] = useState(true);
   const cancelButtonRef = useRef(null);
   const [password, setPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const { setUid } = props;
+  const { open, setOpenModal, setUid } = props;
 
   const logInWithEmailAndPassword = async (email: string, password: string) => {
     try {
@@ -28,12 +29,21 @@ export default function ConnexionModal(props: {
   };
 
   return (
-    <Transition.Root show={open} as={Fragment}>
+    <Transition.Root
+      show={open}
+      as={Fragment}
+      enter="transition-opacity duration-75"
+      enterFrom="opacity-0"
+      enterTo="opacity-100"
+      leave="transition-opacity duration-150"
+      leaveFrom="opacity-100"
+      leaveTo="opacity-0"
+    >
       <Dialog
         as="div"
         className="relative z-10"
         initialFocus={cancelButtonRef}
-        onClose={setOpen}
+        onClose={setOpenModal}
       >
         <Transition.Child
           as={Fragment}
@@ -60,27 +70,31 @@ export default function ConnexionModal(props: {
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
-                  <div className="sm:flex sm:items-start">
-                    <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
-                      <ArrowRightOnRectangleIcon
-                        className="h-6 w-6 text-blue-600"
-                        aria-hidden="true"
-                      />
+                  <div className="flex items-start flex-col">
+                    <div className="flex flex-row">
+                      <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
+                        <ArrowRightOnRectangleIcon
+                          className="h-6 w-6 text-blue-600"
+                          aria-hidden="true"
+                        />
+                      </div>
+                      <div className="self-center ml-2">
+                        <Dialog.Title
+                          as="h3"
+                          className="text-base font-semibold leading-6 text-gray-900"
+                        >
+                          Log in to your account
+                        </Dialog.Title>
+                      </div>
                     </div>
-                    <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                      <Dialog.Title
-                        as="h3"
-                        className="text-base font-semibold leading-6 text-gray-900"
-                      >
-                        Connect to your account
-                      </Dialog.Title>
-                      <div className="w-max mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                        <div>
+                    <div className="w-full text-center sm:ml-4 sm:mt-0 sm:text-left">
+                      <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
+                        <div className="mt-2">
                           <label
                             htmlFor="mail"
                             className="block text-sm font-medium leading-6 text-gray-900"
                           >
-                            E-mail address
+                            E-mail
                           </label>
                           <div className="mt-2">
                             <input
@@ -95,16 +109,13 @@ export default function ConnexionModal(props: {
                             />
                           </div>
                         </div>
-
-                        <div>
-                          <div className="flex items-center justify-between">
-                            <label
-                              htmlFor="password"
-                              className="block text-sm font-medium leading-6 text-gray-900"
-                            >
-                              Password
-                            </label>
-                          </div>
+                        <div className="mt-2">
+                          <label
+                            htmlFor="mail"
+                            className="block text-sm font-medium leading-6 text-gray-900"
+                          >
+                            Password
+                          </label>
                           <div className="mt-2">
                             <input
                               id="password"
@@ -133,7 +144,7 @@ export default function ConnexionModal(props: {
                   <button
                     type="button"
                     className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                    onClick={() => setOpen(false)}
+                    onClick={() => setOpenModal(false)}
                     ref={cancelButtonRef}
                   >
                     Cancel
