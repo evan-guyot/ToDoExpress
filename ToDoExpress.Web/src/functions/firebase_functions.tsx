@@ -1,11 +1,10 @@
-import { collection, getDocs, doc, getDoc } from "firebase/firestore";
-import { db } from "@/config/firebase";
+import { collection, getDocs, doc, getDoc, setDoc } from "firebase/firestore";
+import { auth, db } from "@/config/firebase";
+import { ITodo, ITodoItem, IUser } from "@/interfaces/firebase_interfaces";
 import {
-  IItem,
-  ITodo,
-  ITodoItem,
-  IUser,
-} from "@/interfaces/firebase_interfaces";
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 
 function firebaseConnexionRequest() {
   const fetchPost = async () => {
@@ -14,7 +13,6 @@ function firebaseConnexionRequest() {
         ...doc.data(),
         id: doc.id,
       }));
-      console.log(newData);
     });
   };
 
@@ -51,7 +49,6 @@ export async function getTodosItemsByUser(uid: string) {
     for (const todoItemRef of documentData.items) {
       const itemId = todoItemRef._key.path.segments[6];
       const todoItemData = await getDocumentById("todos_items", itemId);
-      console.log("item:", todoItemData);
 
       if (todoItemData) {
         const todoItem: ITodoItem = {
@@ -72,4 +69,58 @@ export async function itemsFromUid(uid: string) {
   var documentData = await getDocumentById("todos", uid);
 
   return documentData ? (documentData as ITodo) : undefined;
+}
+
+export const logIn = async (email: string, password: string) => {
+  try {
+    const res = await signInWithEmailAndPassword(auth, email, password);
+
+    try {
+      const userData = await userFromUid(res.user.uid);
+      sessionStorage.setItem(
+        "user",
+        JSON.stringify({
+          uid: res.user.uid,
+          name: userData?.name,
+          email: res.user.email,
+        })
+      );
+      window.location.reload();
+    } catch (err) {
+      console.error(err);
+    }
+  } catch (err) {
+    console.error("Authentication error !");
+  }
+};
+
+export function logOut() {
+  if (sessionStorage.getItem("user")) {
+    sessionStorage.removeItem("user");
+    window.location.reload();
+  }
+}
+
+export async function register(name: string, email: string, password: string) {
+  try {
+    const res = await createUserWithEmailAndPassword(auth, email, password);
+    const user = res.user;
+    const userRef = doc(db, "users", user.uid);
+    const todosRef = doc(db, "todos", user.uid);
+
+    await setDoc(userRef, {
+      uid: user.uid,
+      name,
+      authProvider: "local",
+      email,
+    });
+
+    await setDoc(todosRef, {
+      items: [],
+    });
+
+    logIn(email, password);
+  } catch (err) {
+    console.error(err);
+  }
 }

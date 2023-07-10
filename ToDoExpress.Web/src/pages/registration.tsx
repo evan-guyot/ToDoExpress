@@ -1,8 +1,6 @@
 import RootLayout from "@/components/layout";
 import { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
-import { auth, db } from "@/config/firebase";
+import { register } from "@/functions/firebase_functions";
 
 export default function Connexion() {
   const [username, setUsername] = useState<string>("");
@@ -14,26 +12,16 @@ export default function Connexion() {
     email: string,
     password: string
   ) => {
-    try {
-      const res = await createUserWithEmailAndPassword(auth, email, password);
-      const user = res.user;
-      const userRef = doc(db, "users", user.uid); // Use user's UID as document ID
-      const todosRef = doc(db, "todos", user.uid); // Use user's UID as document ID
-
-      await setDoc(userRef, {
-        uid: user.uid,
-        name,
-        authProvider: "local",
-        email,
-      });
-
-      await setDoc(todosRef, {
-        items: [],
-      });
-    } catch (err) {
-      console.error(err);
-    }
+    register(name, email, password);
   };
+
+  useState(() => {
+    if (typeof window !== "undefined") {
+      if (sessionStorage.getItem("user")) {
+        window.location.href = "/";
+      }
+    }
+  });
 
   return (
     <RootLayout navbar>

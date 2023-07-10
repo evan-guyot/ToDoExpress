@@ -1,62 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Dialog } from "@headlessui/react";
-import {
-  ArrowPathIcon,
-  Bars3Icon,
-  ChartPieIcon,
-  CursorArrowRaysIcon,
-  FingerPrintIcon,
-  SquaresPlusIcon,
-  QueueListIcon,
-  XMarkIcon,
-  HomeIcon,
-} from "@heroicons/react/24/outline";
-import { PhoneIcon, PlayCircleIcon } from "@heroicons/react/20/solid";
+import { Bars3Icon, XMarkIcon, HomeIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
-
-const products = [
-  {
-    name: "Analytics",
-    description: "Get a better understanding of your traffic",
-    href: "#",
-    icon: ChartPieIcon,
-  },
-  {
-    name: "Engagement",
-    description: "Speak directly to your customers",
-    href: "#",
-    icon: CursorArrowRaysIcon,
-  },
-  {
-    name: "Security",
-    description: "Your customers’ data will be safe and secure",
-    href: "#",
-    icon: FingerPrintIcon,
-  },
-  {
-    name: "Integrations",
-    description: "Connect with third-party tools",
-    href: "#",
-    icon: SquaresPlusIcon,
-  },
-  {
-    name: "Automations",
-    description: "Build strategic funnels that will convert",
-    href: "#",
-    icon: ArrowPathIcon,
-  },
-];
-const callsToAction = [
-  { name: "Watch demo", href: "#", icon: PlayCircleIcon },
-  { name: "Contact sales", href: "#", icon: PhoneIcon },
-];
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
-}
+import { IFirebaseUser } from "@/interfaces/firebase_interfaces";
+import { logOut } from "@/functions/firebase_functions";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState<IFirebaseUser | undefined>();
+
+  useEffect(() => {
+    if (!user && sessionStorage.getItem("user") !== null) {
+      setUser(JSON.parse(sessionStorage.getItem("user")!));
+    }
+  }, [user]);
 
   return (
     <header className="bg-white">
@@ -84,12 +41,22 @@ export default function Navbar() {
         </div>
 
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <Link
-            href="/registration"
-            className="text-sm font-semibold leading-6 text-gray-900"
-          >
-            Register <span aria-hidden="true">&rarr;</span>
-          </Link>
+          {user ? (
+            <Link
+              href="#"
+              className="text-sm font-semibold leading-6 text-gray-900"
+              onClick={() => logOut()}
+            >
+              Log out
+            </Link>
+          ) : (
+            <Link
+              href="/registration"
+              className="text-sm font-semibold leading-6 text-gray-900"
+            >
+              Register <span aria-hidden="true">&rarr;</span>
+            </Link>
+          )}
         </div>
       </nav>
       <Dialog
@@ -102,9 +69,13 @@ export default function Navbar() {
         <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
             <Link href="#" className="-m-1.5 p-1.5">
-            <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10 border-2 border-blue-600">
-              <HomeIcon className="text-blue-600 p-1" height={32} width={32} />
-            </div>
+              <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10 border-2 border-blue-600">
+                <HomeIcon
+                  className="text-blue-600 p-1"
+                  height={32}
+                  width={32}
+                />
+              </div>
             </Link>
             <button
               type="button"

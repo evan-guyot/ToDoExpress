@@ -1,56 +1,42 @@
 import ConnexionModal from "@/components/connexionModal";
 import RootLayout from "@/components/layout";
-import {
-  getTodosItemsByUser,
-  itemsFromUid,
-  userFromUid,
-} from "@/functions/firebase_functions";
-import { ITodoItem, IUser } from "@/interfaces/firebase_interfaces";
+import { getTodosItemsByUser } from "@/functions/firebase_functions";
+import { IFirebaseUser, ITodoItem } from "@/interfaces/firebase_interfaces";
 import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
 
 export default function Connexion() {
-  const [user, setUser] = useState<IUser | undefined>();
-  const [userUid, setUserUid] = useState<string>();
+  const [user, setUser] = useState<IFirebaseUser | undefined>();
   const [todoItems, setTodoItems] = useState<ITodoItem[]>();
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
-      if (userUid) {
+      if (user) {
         try {
-          const todoItems = await getTodosItemsByUser(userUid);
+          const todoItems = await getTodosItemsByUser(user.uid);
           if (todoItems) {
             setTodoItems(todoItems);
-          }
-
-          const itemsData = await itemsFromUid(userUid);
-          if (itemsData !== undefined) {
-            // setItems(itemsData);
-          }
-          const userData = await userFromUid(userUid);
-          if (userData !== undefined) {
-            setUser(userData);
           }
         } catch (err) {
           console.error(err);
         }
       }
     }
-    if (userUid) {
+
+    if (user) {
       fetchData();
+    } else if (sessionStorage.getItem("user") !== null) {
+      let user: IFirebaseUser = JSON.parse(sessionStorage.getItem("user")!);
+      setUser(user);
     }
-  }, [userUid]);
+  }, [user]);
 
   return (
     <RootLayout navbar>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        {!userUid && (
-          <ConnexionModal
-            setUid={setUserUid}
-            open={openModal}
-            setOpenModal={setOpenModal}
-          />
+        {!user && (
+          <ConnexionModal open={openModal} setOpenModal={setOpenModal} />
         )}
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           {user ? (

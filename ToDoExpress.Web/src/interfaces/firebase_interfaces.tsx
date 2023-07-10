@@ -6,6 +6,12 @@ export interface ITodo {
   items: string[];
 }
 
+export interface IFirebaseUser {
+  uid: string;
+  name: string | undefined;
+  email: string | null;
+}
+
 export interface IUser {
   name: string;
   email: string;

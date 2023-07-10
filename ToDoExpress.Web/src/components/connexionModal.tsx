@@ -1,32 +1,16 @@
-import { Dispatch, Fragment, SetStateAction, useRef, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import {
-  ArrowRightOnRectangleIcon,
-  ExclamationTriangleIcon,
-} from "@heroicons/react/24/outline";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "@/config/firebase";
+import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
+import { logIn } from "@/functions/firebase_functions";
 
 export default function ConnexionModal(props: {
-  setUid: Dispatch<SetStateAction<string | undefined>>;
   open: boolean;
   setOpenModal: (state: boolean) => void;
 }) {
   const cancelButtonRef = useRef(null);
   const [password, setPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const { open, setOpenModal, setUid } = props;
-
-  const logInWithEmailAndPassword = async (email: string, password: string) => {
-    try {
-      const res = await signInWithEmailAndPassword(auth, email, password);
-      console.log(res);
-      setUid(res.user.uid);
-      console.log("user " + res.user.uid + " is connected");
-    } catch (err) {
-      console.log("Authentication error !");
-    }
-  };
+  const { open, setOpenModal } = props;
 
   return (
     <Transition.Root
@@ -137,7 +121,7 @@ export default function ConnexionModal(props: {
                   <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 sm:ml-3 sm:w-auto"
-                    onClick={() => logInWithEmailAndPassword(email, password)}
+                    onClick={() => logIn(email, password)}
                   >
                     Log in
                   </button>
