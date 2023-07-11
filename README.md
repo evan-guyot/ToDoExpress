@@ -26,10 +26,10 @@ ToDoExpress is an online ToDo application built with Next.js, React, TypeScript,
 ## Technologies Used
 
 - [Next.js](https://nextjs.org/): A React framework for building server-side rendered and statically generated web applications.
-- [React](https://reactjs.org/): A JavaScript library for building user interfaces.
+- [React](https://react.dev/): A JavaScript library for building user interfaces.
 - [TypeScript](https://www.typescriptlang.org/): A typed superset of JavaScript that compiles to plain JavaScript.
 - [Tailwind CSS](https://tailwindcss.com/): A utility-first CSS framework for rapid UI development.
-- [Firebase](https://firebase.google.com/): A cloud-based platform for building web and mobile applications.
+- [Firebase](https://firebase.google.com/): A google cloud-based platform for building web and mobile applications.
 
 ## Getting Started
 
@@ -55,9 +55,10 @@ Make sure you have the following installed on your machine:
    npm install
    ```
 3. Create a Firebase project and set up a Firestore database. That contains the following collections :
-   -- `users`
-   -- `todos`
-   -- `todos_items`
+
+   - `users`
+   - `todos`
+   - `todos_items`
 
 4. Create a `.env.local` file in the root of the project and add the following environment variables:
 
