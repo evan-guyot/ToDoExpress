@@ -10,7 +10,7 @@ ToDoExpress is an online ToDo application built with Next.js, React, TypeScript,
 - [x] User authentication: Users can log out
 
 - ### Create and manage to-do lists
-- [ ] Create and manage to-do lists: Users can add tasks to the to-do list
+- [x] Create and manage to-do lists: Users can add tasks to the to-do list
 - [ ] Create and manage to-do lists: Users can edit tasks in the to-do list
 - [ ] Create and manage to-do lists: Users can delete tasks from the to-do list
 - [ ] Mark tasks as complete: Users can mark tasks as complete
