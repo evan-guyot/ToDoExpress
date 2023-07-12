@@ -1,4 +1,13 @@
-import { collection, getDocs, doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  setDoc,
+  addDoc,
+  updateDoc,
+  arrayUnion,
+} from "firebase/firestore";
 import { auth, db } from "@/config/firebase";
 import { ITodo, ITodoItem, IUser } from "@/interfaces/firebase_interfaces";
 import {
@@ -47,9 +56,8 @@ export async function getTodosItemsByUser(uid: string) {
   var todosItems: Array<ITodoItem> = [];
   if (documentData) {
     for (const todoItemRef of documentData.items) {
-      const itemId = todoItemRef._key.path.segments[6];
-      const todoItemData = await getDocumentById("todos_items", itemId);
-
+      const path = todoItemRef.split("/");
+      const todoItemData = await getDocumentById(path[0], path[1]);
       if (todoItemData) {
         const todoItem: ITodoItem = {
           title: todoItemData.title,
@@ -123,4 +131,24 @@ export async function register(name: string, email: string, password: string) {
   } catch (err) {
     console.error(err);
   }
+}
+
+export async function addItemTodo(uid: string, todoItem: ITodoItem) {
+  try {
+    const todosItemsRef = collection(db, "todos_items");
+    addDoc(todosItemsRef, {
+      order: todoItem.order,
+      title: todoItem.title,
+      description: todoItem.description,
+    }).then(async (docRef) => {
+      const todosRef = doc(db, "todos", uid);
+      await updateDoc(todosRef, {
+        items: arrayUnion(docRef.path),
+      });
+      return true;
+    });
+  } catch (error) {
+    console.error(error);
+  }
+  return false;
 }

@@ -1,16 +1,43 @@
-import { Fragment, useRef, useState } from "react";
+import { addItemTodo } from "@/functions/firebase_functions";
+import { IFirebaseUser, ITodoItem } from "@/interfaces/firebase_interfaces";
 import { Dialog, Transition } from "@headlessui/react";
-import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
-import { logIn } from "@/functions/firebase_functions";
+import { Fragment, useRef, useState } from "react";
 
-export default function ConnexionModal(props: {
+export default function AddElementModal(props: {
   open: boolean;
   setOpenModal: (state: boolean) => void;
+  addToParentItems: (item: ITodoItem) => void;
+  listLength: number;
 }) {
+  const { open, setOpenModal, addToParentItems, listLength } = props;
   const cancelButtonRef = useRef(null);
-  const [password, setPassword] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const { open, setOpenModal } = props;
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+
+  const addItem = () => {
+    console.log(title.trim().length);
+    console.log(description.trim().length);
+    if (
+      title.trim().length > 0 &&
+      description.trim().length > 0 &&
+      sessionStorage.getItem("user")
+    ) {
+      let uid = (JSON.parse(sessionStorage.getItem("user")!) as IFirebaseUser)
+        .uid;
+
+      let todoItem = {
+        title: title,
+        order: listLength,
+        description: description,
+      };
+
+      addItemTodo(uid, todoItem);
+      addToParentItems(todoItem);
+      setOpenModal(false);
+      setTitle("");
+      setDescription("");
+    }
+  };
 
   return (
     <Transition.Root
@@ -52,42 +79,26 @@ export default function ConnexionModal(props: {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg m-auto">
                 <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                   <div className="flex items-start flex-col">
-                    <div className="flex flex-row">
-                      <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
-                        <ArrowRightOnRectangleIcon
-                          className="h-6 w-6 text-blue-600"
-                          aria-hidden="true"
-                        />
-                      </div>
-                      <div className="self-center ml-2">
-                        <Dialog.Title
-                          as="h3"
-                          className="text-base font-semibold leading-6 text-gray-900"
-                        >
-                          Log in to your account
-                        </Dialog.Title>
-                      </div>
-                    </div>
-                    <div className="w-full text-center sm:ml-4 sm:mt-0 sm:text-left">
-                      <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
+                    <div className="w-full text-center  sm:mt-0 sm:text-left">
+                      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                         <div className="mt-2">
                           <label
-                            htmlFor="mail"
+                            htmlFor="title"
                             className="block text-sm font-medium leading-6 text-gray-900"
                           >
-                            E-mail
+                            Titre
                           </label>
                           <div className="mt-2">
                             <input
-                              id="email"
-                              name="email"
-                              type="email"
-                              value={email}
-                              onChange={(e) => setEmail(e.target.value)}
-                              autoComplete="email"
+                              id="title"
+                              name="title"
+                              type="title"
+                              autoComplete="title"
+                              value={title}
+                              onChange={(e) => setTitle(e.target.value)}
                               required
                               className="block w-full rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
                             />
@@ -95,22 +106,21 @@ export default function ConnexionModal(props: {
                         </div>
                         <div className="mt-2">
                           <label
-                            htmlFor="password"
+                            htmlFor="description"
                             className="block text-sm font-medium leading-6 text-gray-900"
                           >
-                            Password
+                            Description
                           </label>
                           <div className="mt-2">
-                            <input
-                              id="password"
-                              name="password"
-                              type="password"
-                              value={password}
-                              onChange={(e) => setPassword(e.target.value)}
-                              autoComplete="current-password"
+                            <textarea
+                              id="description"
+                              name="description"
+                              rows={5}
+                              value={description}
+                              onChange={(e) => setDescription(e.target.value)}
                               required
-                              className="block w-full rounded-md border-0 py-1.5  px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-                            />
+                              className="block w-full rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                            ></textarea>
                           </div>
                         </div>
                       </div>
@@ -121,9 +131,9 @@ export default function ConnexionModal(props: {
                   <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto"
-                    onClick={() => logIn(email, password)}
+                    onClick={() => addItem()}
                   >
-                    Log in
+                    Add
                   </button>
                   <button
                     type="button"

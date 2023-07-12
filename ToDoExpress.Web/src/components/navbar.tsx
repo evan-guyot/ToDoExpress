@@ -24,7 +24,7 @@ export default function Navbar() {
         <div className="flex lg:flex-1">
           <Link href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">ToDo Express</span>
-            <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10 border-2 border-blue-600">
+            <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-50 sm:mx-0 sm:h-10 sm:w-10 border-2 border-blue-600 hover:bg-blue-200">
               <HomeIcon className="text-blue-600 p-1" height={32} width={32} />
             </div>
           </Link>
