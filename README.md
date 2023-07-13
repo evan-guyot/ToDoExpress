@@ -19,6 +19,7 @@ ToDoExpress is an online ToDo application built with Next.js, React, TypeScript,
 - [ ] Create and manage to-do lists: Users can manage multiple to-do lists
 
 - ### Design
+- [x] User side SIP : The application is a Single Page Application
 - [x] Responsive design: The application is optimized for different devices
 - [x] Responsive design: The application is optimized for different screen sizes
 - [ ] Responsive design: The application is optimized for a seamless experience

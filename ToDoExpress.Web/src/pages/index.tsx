@@ -12,6 +12,7 @@ export default function Connexion() {
   const [todoItems, setTodoItems] = useState<ITodoItem[]>();
   const [openConnexionModal, setOpenConnexionModal] = useState(false);
   const [openAddElementModal, setOpenAddElementModal] = useState(false);
+  const [openRegModal, setOpenRegModal] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -85,15 +86,8 @@ export default function Connexion() {
               </h2>
               <div className="flex flex-col">
                 <p>
-                  Please{" "}
-                  <Link
-                    className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                    href=""
-                    onClick={() => setOpenConnexionModal(true)}
-                  >
-                    Log in
-                  </Link>{" "}
-                  to your account to manage your To-Do Express.{" "}
+                  Log in to your account or create one, to manage your To-Do
+                  Express.
                 </p>
               </div>
             </Fragment>
