@@ -1,7 +1,9 @@
 import { register } from "@/functions/firebase_functions";
+import { IError } from "@/interfaces/general_interfaces";
 import { Dialog } from "@headlessui/react";
 import { LightBulbIcon } from "@heroicons/react/24/outline";
 import { Fragment, MutableRefObject, useState } from "react";
+import { ErrorDisplay } from "../errorDisplay";
 
 export default function RegistrationModalContent(props: {
   setOpenModal: (state: boolean) => void;
@@ -12,14 +14,30 @@ export default function RegistrationModalContent(props: {
   const [password, setPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const { setOpenModal, setRegistration, cancelRef } = props;
+  const [error, setError] = useState<IError | undefined>(undefined);
 
-  const registerWithEmailAndPassword = async (
+  async function registerWithEmailAndPassword(
     name: string,
     email: string,
     password: string
-  ) => {
-    register(name, email, password);
-  };
+  ) {
+    try {
+      if (username.length > 5 || password.length > 5) {
+        throw new Error("Requirements not met for the registration");
+      }
+      await register(name, email, password);
+    } catch (error) {
+      setError({
+        mainMessage:
+          "Registration error. Make sure you are completing the following requirements : ",
+        subMessages: [
+          "Your username should contain more than 5 characters",
+          "Your email should be valid",
+          "Your password should contain more than 5 characters",
+        ],
+      });
+    }
+  }
 
   return (
     <Fragment>
@@ -43,6 +61,7 @@ export default function RegistrationModalContent(props: {
           </div>
           <div className="w-full text-center sm:ml-4 sm:mt-0 sm:text-left">
             <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
+              {error && <ErrorDisplay error={error} setError={setError} />}
               <div className="mt-2">
                 <label
                   htmlFor="username"
@@ -107,7 +126,7 @@ export default function RegistrationModalContent(props: {
                 <p className="font-semibold text-gray-500">
                   You already have an account ?{" "}
                   <a
-                    href=""
+                    href="#"
                     className="font-semibold text-indigo-600 hover:text-indigo-500"
                     onClick={() => setRegistration(false)}
                   >

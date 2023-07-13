@@ -80,26 +80,17 @@ export async function itemsFromUid(uid: string) {
 }
 
 export const logIn = async (email: string, password: string) => {
-  try {
-    const res = await signInWithEmailAndPassword(auth, email, password);
-
-    try {
-      const userData = await userFromUid(res.user.uid);
-      sessionStorage.setItem(
-        "user",
-        JSON.stringify({
-          uid: res.user.uid,
-          name: userData?.name,
-          email: res.user.email,
-        })
-      );
-      window.location.reload();
-    } catch (err) {
-      console.error(err);
-    }
-  } catch (err) {
-    console.error("Authentication error !");
-  }
+  const res = await signInWithEmailAndPassword(auth, email, password);
+  const userData = await userFromUid(res.user.uid);
+  sessionStorage.setItem(
+    "user",
+    JSON.stringify({
+      uid: res.user.uid,
+      name: userData?.name,
+      email: res.user.email,
+    })
+  );
+  window.location.reload();
 };
 
 export function logOut() {
@@ -110,27 +101,23 @@ export function logOut() {
 }
 
 export async function register(name: string, email: string, password: string) {
-  try {
-    const res = await createUserWithEmailAndPassword(auth, email, password);
-    const user = res.user;
-    const userRef = doc(db, "users", user.uid);
-    const todosRef = doc(db, "todos", user.uid);
+  const res = await createUserWithEmailAndPassword(auth, email, password);
+  const user = res.user;
+  const userRef = doc(db, "users", user.uid);
+  const todosRef = doc(db, "todos", user.uid);
 
-    await setDoc(userRef, {
-      uid: user.uid,
-      name,
-      authProvider: "local",
-      email,
-    });
+  await setDoc(userRef, {
+    uid: user.uid,
+    name,
+    authProvider: "local",
+    email,
+  });
 
-    await setDoc(todosRef, {
-      items: [],
-    });
+  await setDoc(todosRef, {
+    items: [],
+  });
 
-    logIn(email, password);
-  } catch (err) {
-    console.error(err);
-  }
+  logIn(email, password);
 }
 
 export async function addItemTodo(uid: string, todoItem: ITodoItem) {

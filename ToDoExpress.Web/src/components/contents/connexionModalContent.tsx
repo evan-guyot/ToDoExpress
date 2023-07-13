@@ -1,7 +1,9 @@
-import { logIn, register } from "@/functions/firebase_functions";
+import { logIn } from "@/functions/firebase_functions";
 import { Dialog } from "@headlessui/react";
 import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
 import { Fragment, MutableRefObject, useState } from "react";
+import { ErrorDisplay } from "../errorDisplay";
+import { IError } from "@/interfaces/general_interfaces";
 
 export default function ConnexionModalContent(props: {
   setOpenModal: (state: boolean) => void;
@@ -11,6 +13,18 @@ export default function ConnexionModalContent(props: {
   const { setOpenModal, setRegistration, cancelRef } = props;
   const [password, setPassword] = useState<string>("");
   const [email, setEmail] = useState<string>("");
+  const [error, setError] = useState<IError | undefined>(undefined);
+
+  async function logInFirebase(email: string, password: string) {
+    try {
+      await logIn(email, password);
+    } catch (error) {
+      setError({
+        mainMessage: "Autentication error",
+        subMessages: undefined,
+      });
+    }
+  }
 
   return (
     <Fragment>
@@ -32,8 +46,10 @@ export default function ConnexionModalContent(props: {
               </Dialog.Title>
             </div>
           </div>
+
           <div className="w-full text-center sm:ml-4 sm:mt-0 sm:text-left">
             <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
+              {error && <ErrorDisplay error={error} setError={setError} />}
               <div className="mt-2">
                 <label
                   htmlFor="mail"
@@ -78,7 +94,7 @@ export default function ConnexionModalContent(props: {
                 <p className="font-semibold text-gray-500">
                   You need an account ?{" "}
                   <a
-                    href=""
+                    href="#"
                     className="font-semibold text-indigo-600 hover:text-indigo-500"
                     onClick={() => setRegistration(true)}
                   >
@@ -94,7 +110,7 @@ export default function ConnexionModalContent(props: {
         <button
           type="button"
           className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto"
-          onClick={() => logIn(email, password)}
+          onClick={() => logInFirebase(email, password)}
         >
           Log in
         </button>

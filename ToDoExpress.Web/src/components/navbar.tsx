@@ -50,7 +50,7 @@ export default function Navbar() {
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             {user ? (
               <Link
-                href=""
+                href="#"
                 className="text-sm font-semibold leading-6 text-gray-900"
                 onClick={() => logOut()}
               >
@@ -58,7 +58,7 @@ export default function Navbar() {
               </Link>
             ) : (
               <Link
-                href=""
+                href="#"
                 className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                 onClick={() => setOpenConnexionModal(true)}
               >
@@ -76,7 +76,7 @@ export default function Navbar() {
           <div className="fixed inset-0 z-10" />
           <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div className="flex items-center justify-between">
-              <Link href="" className="-m-1.5 p-1.5">
+              <Link href="#" className="-m-1.5 p-1.5">
                 <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10 border-2 border-blue-600">
                   <HomeIcon
                     className="text-blue-600 p-1"
@@ -98,7 +98,7 @@ export default function Navbar() {
               <div className="-my-6 divide-y divide-gray-500/10">
                 <div className="py-6">
                   <Link
-                    href=""
+                    href="#"
                     className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                     onClick={() => setOpenConnexionModal(true)}
                   >
