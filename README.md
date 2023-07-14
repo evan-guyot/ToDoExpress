@@ -5,24 +5,25 @@ ToDoExpress is an online ToDo application built with Next.js, React, TypeScript,
 ## Features
 
 - ### User authentication
-- [x] User authentication: Users can sign up
-- [x] User authentication: Users can log in
-- [x] User authentication: Users can log out
+- [x] Users can sign up
+- [x] Users can log in
+- [x] Users can log out
 
 - ### Create and manage to-do lists
-- [x] Create and manage to-do lists: Users can add tasks to the to-do list
-- [ ] Create and manage to-do lists: Users can edit tasks in the to-do list
-- [ ] Create and manage to-do lists: Users can delete tasks from the to-do list
-- [ ] Mark tasks as complete: Users can mark tasks as complete
-- [ ] Filter and sort tasks: Users can filter tasks by status (complete/incomplete)
-- [ ] Filter and sort tasks: Users can sort tasks by various criteria
-- [ ] Create and manage to-do lists: Users can manage multiple to-do lists
+- [x] Users can add tasks to the to-do list
+- [ ] Users can edit tasks in the to-do list
+- [ ] Users can delete tasks from the to-do list
+- [ ] Users can mark tasks as complete
+- [ ] Users can filter tasks by status (complete/incomplete)
+- [ ] Users can sort tasks by various criteria
+- [ ] Users can manage multiple to-do lists
 
 - ### Design
-- [x] User side SIP : The application is a Single Page Application
-- [x] Responsive design: The application is optimized for different devices
-- [x] Responsive design: The application is optimized for different screen sizes
-- [ ] Responsive design: The application is optimized for a seamless experience
+- [x] The application is a Single Page Application
+- [x] The application is optimized for different devices
+- [x] The application is optimized for different screen sizes
+- [x] The application available in dark mode
+- [ ] The application is optimized for a seamless experience
 
 ## Technologies Used
 

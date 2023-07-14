@@ -53,7 +53,7 @@ export default function Connexion() {
           {user && todoItems ? (
             <Fragment>
               <button
-                className="absolute inline-flex items-center justify-center p-2 bg-blue-500 rounded-md shadow-lg w-9 h-9"
+                className="absolute inline-flex items-center justify-center p-2 bg-blue-500 rounded-md shadow-lg w-9 h-9 dark:bg-gray-800 dark:border-gray-700 "
                 onClick={() => setOpenAddElementModal(true)}
               >
                 <PlusIcon width={24} height={24} color="white" />
@@ -64,8 +64,8 @@ export default function Connexion() {
                 addToParentItems={addToItems}
                 listLength={todoItems.length}
               />
-              <h2 className="m-1 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                {user.name}&#39;s To Do
+              <h2 className="m-1 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 dark:text-white">
+                Your To Do X
               </h2>
               <ul className="flex flex-col">
                 {todoItems.map((todo) => (
@@ -81,7 +81,7 @@ export default function Connexion() {
             </Fragment>
           ) : (
             <Fragment>
-              <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+              <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 dark:text-white">
                 Welcome
               </h2>
               <div className="flex flex-col">

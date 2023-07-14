@@ -80,14 +80,14 @@ export default function AddElementModal(props: {
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg m-auto">
-                <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4 dark:bg-gray-800">
                   <div className="flex items-start flex-col">
                     <div className="w-full text-center  sm:mt-0 sm:text-left">
                       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                         <div className="mt-2">
                           <label
                             htmlFor="title"
-                            className="block text-sm font-medium leading-6 text-gray-900"
+                            className="block text-sm font-medium leading-6 text-gray-900 dark:text-white"
                           >
                             Titre
                           </label>
@@ -100,14 +100,14 @@ export default function AddElementModal(props: {
                               value={title}
                               onChange={(e) => setTitle(e.target.value)}
                               required
-                              className="block w-full rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                              className="block w-full rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6 dark:bg-gray-700 dark:text-white"
                             />
                           </div>
                         </div>
                         <div className="mt-2">
                           <label
                             htmlFor="description"
-                            className="block text-sm font-medium leading-6 text-gray-900"
+                            className="block text-sm font-medium leading-6 text-gray-900 dark:text-white"
                           >
                             Description
                           </label>
@@ -119,7 +119,7 @@ export default function AddElementModal(props: {
                               value={description}
                               onChange={(e) => setDescription(e.target.value)}
                               required
-                              className="block w-full rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                              className="block w-full rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6 dark:bg-gray-700 dark:text-white"
                             ></textarea>
                           </div>
                         </div>
@@ -127,10 +127,10 @@ export default function AddElementModal(props: {
                     </div>
                   </div>
                 </div>
-                <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 dark:bg-gray-700">
                   <button
                     type="button"
-                    className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto"
+                    className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto  dark:bg-gray-800 hover:dark:bg-gray-950 dark:text-white"
                     onClick={() => addItem()}
                   >
                     Add

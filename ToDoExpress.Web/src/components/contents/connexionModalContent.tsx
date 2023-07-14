@@ -27,11 +27,11 @@ export default function ConnexionModalContent(props: {
   }
 
   return (
-    <Fragment>
-      <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+    <div className="bg-white dark:bg-gray-800">
+      <div className="px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
         <div className="flex items-start flex-col">
           <div className="flex flex-row">
-            <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
+            <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10 dark:bg-gray-800">
               <ArrowRightOnRectangleIcon
                 className="h-6 w-6 text-blue-600"
                 aria-hidden="true"
@@ -40,7 +40,7 @@ export default function ConnexionModalContent(props: {
             <div className="self-center ml-2">
               <Dialog.Title
                 as="h3"
-                className="text-base font-semibold leading-6 text-gray-900"
+                className="text-base font-semibold leading-6 text-gray-900 dark:text-white"
               >
                 Log in to your account
               </Dialog.Title>
@@ -53,7 +53,7 @@ export default function ConnexionModalContent(props: {
               <div className="mt-2">
                 <label
                   htmlFor="mail"
-                  className="block text-sm font-medium leading-6 text-gray-900"
+                  className="block text-sm font-medium leading-6 text-gray-900 dark:text-white"
                 >
                   E-mail
                 </label>
@@ -66,14 +66,14 @@ export default function ConnexionModalContent(props: {
                     onChange={(e) => setEmail(e.target.value)}
                     autoComplete="email"
                     required
-                    className="block w-full rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6 dark:bg-gray-700 dark:text-white"
                   />
                 </div>
               </div>
               <div className="mt-2">
                 <label
                   htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
+                  className="block text-sm font-medium leading-6 text-gray-900 dark:text-white"
                 >
                   Password
                 </label>
@@ -86,7 +86,7 @@ export default function ConnexionModalContent(props: {
                     onChange={(e) => setPassword(e.target.value)}
                     autoComplete="current-password"
                     required
-                    className="block w-full rounded-md border-0 py-1.5  px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 py-1.5 px-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6 dark:bg-gray-700 dark:text-white"
                   />
                 </div>
               </div>
@@ -106,10 +106,10 @@ export default function ConnexionModalContent(props: {
           </div>
         </div>
       </div>
-      <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+      <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 dark:bg-gray-700">
         <button
           type="button"
-          className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto"
+          className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto dark:bg-gray-800 hover:dark:bg-gray-950 dark:text-white"
           onClick={() => logInFirebase(email, password)}
         >
           Log in
@@ -123,6 +123,6 @@ export default function ConnexionModalContent(props: {
           Cancel
         </button>
       </div>
-    </Fragment>
+    </div>
   );
 }
