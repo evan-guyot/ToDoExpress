@@ -18,6 +18,7 @@ export interface IUser {
 }
 
 export interface ITodoItem {
+  id: string | undefined;
   title: string;
   order: number;
   description: string;

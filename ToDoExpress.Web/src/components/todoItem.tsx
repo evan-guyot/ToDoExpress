@@ -1,33 +1,27 @@
-import { IError } from "@/interfaces/general_interfaces";
+import { ITodoItem } from "@/interfaces/firebase_interfaces";
 
-export function ErrorDisplay(props: {
-  error: IError;
-  setError: (error: IError | undefined) => void;
+export default function ToDoItem(props: {
+  toDoItem: ITodoItem;
+  deleteItem: (index: number) => void;
+  index: number;
 }) {
-  const { error, setError } = props;
+  const { toDoItem, deleteItem, index } = props;
 
   return (
-    <div
-      id="alert-2"
-      className="flex items-center p-2 mb-4 text-red-800 rounded-lg bg-red-50 dark:bg-red-800/50 dark:text-red-400 "
-      role="alert"
+    <li
+      key={index}
+      className="flex flex-row gap-x-2 py-3 px-4 text-sm  bg-white border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white"
     >
-      <div className="ml-3 text-sm">
-        <span className="font-medium">{error.mainMessage}</span>
-        {error.subMessages && (
-          <ul className="mt-1.5 ml-4 list-disc list-inside">
-            {error.subMessages.map((subMessage, index) => {
-              return <li key={index}>{subMessage}</li>;
-            })}
-          </ul>
-        )}
+      <div className="flex-col">
+        <p className="text-lg">{toDoItem.title}</p>
+        <p className="text-sm text-gray-500">{toDoItem.description}</p>
       </div>
       <button
         type="button"
         className="ml-auto -mx-1.5 -my-1.5 mr-0.5 p-1.5 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 hover:bg-red-200 inline-flex items-center justify-center h-6 w-6 dark:text-red-400 dark:hover:dark:bg-red-900/50"
         data-dismiss-target="#alert"
         aria-label="Close"
-        onClick={() => setError(undefined)}
+        onClick={() => deleteItem(index)}
       >
         <span className="sr-only">Close</span>
         <svg
@@ -46,6 +40,6 @@ export function ErrorDisplay(props: {
           />
         </svg>
       </button>
-    </div>
+    </li>
   );
 }

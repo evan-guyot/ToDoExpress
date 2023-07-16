@@ -15,8 +15,6 @@ export default function AddElementModal(props: {
   const [description, setDescription] = useState<string>("");
 
   const addItem = () => {
-    console.log(title.trim().length);
-    console.log(description.trim().length);
     if (
       title.trim().length > 0 &&
       description.trim().length > 0 &&
@@ -25,7 +23,8 @@ export default function AddElementModal(props: {
       let uid = (JSON.parse(sessionStorage.getItem("user")!) as IFirebaseUser)
         .uid;
 
-      let todoItem = {
+      let todoItem: ITodoItem = {
+        id: undefined,
         title: title,
         order: listLength,
         description: description,

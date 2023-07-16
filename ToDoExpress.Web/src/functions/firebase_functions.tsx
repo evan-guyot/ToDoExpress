@@ -7,6 +7,8 @@ import {
   addDoc,
   updateDoc,
   arrayUnion,
+  deleteDoc,
+  arrayRemove,
 } from "firebase/firestore";
 import { auth, db } from "@/config/firebase";
 import { ITodo, ITodoItem, IUser } from "@/interfaces/firebase_interfaces";
@@ -60,6 +62,7 @@ export async function getTodosItemsByUser(uid: string) {
       const todoItemData = await getDocumentById(path[0], path[1]);
       if (todoItemData) {
         const todoItem: ITodoItem = {
+          id: path[1],
           title: todoItemData.title,
           order: todoItemData.order,
           description: todoItemData.description,
@@ -96,7 +99,6 @@ export const logIn = async (email: string, password: string) => {
 export function logOut() {
   if (sessionStorage.getItem("user")) {
     sessionStorage.removeItem("user");
-    window.location.reload();
   }
 }
 
@@ -138,4 +140,16 @@ export async function addItemTodo(uid: string, todoItem: ITodoItem) {
     console.error(error);
   }
   return false;
+}
+
+export async function deleteToDoItem(uid: string, itemId: string | undefined) {
+  if (itemId) {
+    const todoDocRef = doc(db, "todos_items", itemId);
+    await deleteDoc(todoDocRef);
+
+    const todosRef = doc(db, "todos", uid);
+    await updateDoc(todosRef, {
+      items: arrayRemove(`todos_items/${itemId}`),
+    });
+  }
 }
